@@ -1,0 +1,174 @@
+@charset "UTF-8";
+//-----------------------------------------------------
+// 整合常用的 @mixin 和 %
+//-----------------------------------------------------
+
+@mixin placeholder($color: #ccc) {
+    &::-webkit-input-placeholder {
+        color: $color;
+    }
+    &::-moz-placeholder {
+        color: $color;
+    }
+    &:-moz-placeholder {
+        color: $color;
+    }
+    &:-ms-input-placeholder {
+        color: $color;
+    }
+}
+%placeholder {
+    @include placeholder;
+}
+
+@mixin inline-block {
+    display: inline-block;
+    @if $lte7 {
+        *display: inline;
+        *zoom: 1;
+    }
+}
+%inline-block {
+    @include inline-block;
+}
+
+@mixin center-block {
+    margin-right: auto;
+    margin-left: auto;
+}
+%center-block {
+    @include center-block;
+}
+
+@mixin clearfix {
+    @if $lte7 {
+        *zoom: 1;
+    }
+    &:before, &:after {
+        display: table;
+        content: "";
+    }
+    &:after {
+        clear: both;
+        overflow: hidden;
+    }
+}
+%clearfix {
+    @include clearfix;
+}
+
+@mixin clear {
+    display: block;
+    clear: both;
+    overflow: hidden;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+}
+%clear {
+    @include clear;
+}
+
+@mixin float($float: left) {
+    float: $float;
+    @if $lte7 and $float != none {
+        display: inline;
+    }
+}
+%fl {
+    @include float;
+}
+%fr {
+    @include float(right);
+}
+%fn {
+    @include float(none);
+}
+
+@mixin visually-hidden($position: absolute) {
+    position: $position;    //必须将 position 设为 absolute/fixed
+    clip: rect(0 0 0 0);
+}
+%visually-hidden {
+    @include visually-hidden;
+}
+
+@mixin list-style($style: disc){
+    margin-left: 25px;
+    list-style: $style;
+}
+%list-style{
+    @include list-style;
+}
+
+@mixin ellipsis($width: 100%) {
+    overflow: hidden;
+    width: $width;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+%ellipsis {
+    @include ellipsis;
+}
+
+@mixin min-height($height) {
+    min-height: $height;
+    height: auto !important;
+    @if $lte7{
+        _height: $height;
+    }
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity / 100;
+    @if $filter {
+        filter: alpha(opacity=$opacity);
+    }
+}
+
+@mixin bgcolor-alpha($bgColor: rgba(0, 0, 0, .5)) {
+    background-color: $bgColor;
+    @if $filter {
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#{ie-hex-str($bgColor)}', endColorstr='#{ie-hex-str($bgColor)}');
+    }
+    :root & {
+        filter: none;
+    }
+}
+
+// 图片替换文字
+@mixin ir($height) {
+    border: none;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    @if $lte7 {
+        _overflow: hidden;
+        _font-size: 10px;
+        _line-height: $height;
+    }
+}
+
+// 三角形（边框法）
+@mixin triangle($direction, $size, $borderColor) {
+    overflow:hidden;
+    width:0;
+    height:0;
+    @if $direction == top {
+        border-bottom:$size solid $borderColor;
+        border-left:$size dashed transparent;
+        border-right:$size dashed transparent;
+    } @else if $direction == right {
+        border-left:$size solid $borderColor;
+        border-top:$size dashed transparent;
+        border-bottom:$size dashed transparent;
+    } @else if $direction == bottom {
+        border-top:$size solid $borderColor;
+        border-left:$size dashed transparent;
+        border-right:$size dashed transparent;
+    } @else if $direction == left {
+        border-right:$size solid $borderColor;
+        border-top:$size dashed transparent;
+        border-bottom:$size dashed transparent;
+    }
+}

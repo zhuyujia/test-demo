@@ -1,20 +1,17 @@
-// npm install --save-dev gulp gulp-sass browser-sync gulp-sourcemaps gulp-file-include gulp-clean
+// npm install --save-dev gulp del gulp-sass gulp-sourcemaps gulp-file-include browser-sync
 
 'use strict';
 
 var gulp = require('gulp'),
+    del = require('del'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     fileinclude = require('gulp-file-include'),
-    clean = require('gulp-clean'),
     browserSync = require('browser-sync').create();
 
 // 清除 dist 文件夹
-gulp.task('clean', function() {
-    return gulp.src('app/dist/**/*', {read: false})
-        .pipe(clean({
-            force: true
-        }));
+gulp.task('clean:dist', function() {
+    del(['app/dist/**/*']);
 });
 
 // html 整合
@@ -57,4 +54,4 @@ gulp.task('serve', function() {
     gulp.watch('app/src/static/sass/*.scss', ['sass']);
 });
 
-gulp.task('default', ['clean', 'html', 'sass', 'serve']);
+gulp.task('default', ['clean:dist', 'html', 'sass', 'serve']);

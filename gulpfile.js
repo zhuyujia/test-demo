@@ -1,27 +1,44 @@
-// npm install --save-dev gulp del gulp-sass gulp-sourcemaps gulp-file-include browser-sync
+// npm install --save-dev gulp del browser-sync gulp-sass gulp-sourcemaps gulp-file-include
+// 新增插件-雪碧图 npm install --save-dev gulp-css-spriter/gulp.spritesmith
+// 后期新增插件-生成版本号 npm install --save-dev gulp-rev gulp-rev-collector
 
 'use strict';
 
 var gulp = require('gulp'),
+    config = require('./config'),
     del = require('del'),
+    browserSync = require('browser-sync').create(),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    fileinclude = require('gulp-file-include'),
-    browserSync = require('browser-sync').create();
+    fileinclude = require('gulp-file-include');
 
 // 清除 dist 文件夹
-gulp.task('clean:dist', function() {
-    del(['app/dist/**/*']);
+gulp.task('clean', function() {
+    return del([config.clean.dest]);
+});
+
+// 配置服务器
+gulp.task('serve', function() {
+    browserSync.init({
+        server: {
+            baseDir: config.browserSync.baseDir
+        },
+        port: 8000
+    });
+
+    gulp.watch(config.html.all, ['html']);
+    gulp.watch(config.sass.all, ['sass']);
+    gulp.watch(config.js.src, ['js']);
 });
 
 // html 整合
 gulp.task('html', function() {
-    return gulp.src(['app/src/template/**/*.html', '!app/src/template/inc/*.html'])
+    return gulp.src([config.html.src])
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(gulp.dest('app/dist'))
+        .pipe(gulp.dest(config.html.dest))
         .pipe(browserSync.reload({
             stream: true
         }));
@@ -29,29 +46,27 @@ gulp.task('html', function() {
 
 // sass 编译
 gulp.task('sass', function() {
-    return gulp.src('app/src/static/sass/style.scss')
+    return gulp.src(config.sass.src)
         .pipe(sourcemaps.init())
         .pipe(sass({
             outputStyle: 'compressed'
         }).on('error', sass.logError))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('app/dist/css'))
+        .pipe(gulp.dest(config.sass.dest))
         .pipe(browserSync.reload({
             stream: true
         }));
 });
 
-// 配置服务器
-gulp.task('serve', function() {
-    browserSync.init({
-        server: {
-            baseDir: 'app/dist'
-        },
-        port: 8000
-    });
-
-    gulp.watch('app/src/template/**/*', ['html']);
-    gulp.watch('app/src/static/sass/*.scss', ['sass']);
+// js 处理
+gulp.task('js', function() {
+    return gulp.src(config.js.src)
+        .pipe(gulp.dest(config.js.dest))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
 });
 
-gulp.task('default', ['clean:dist', 'html', 'sass', 'serve']);
+gulp.task('default', ['clean'], function() {
+    gulp.start('html', 'sass', 'js', 'serve');
+});

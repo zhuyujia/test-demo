@@ -7,7 +7,8 @@ var src = './app/src',
 
 module.exports = {
     browserSync: {
-        baseDir: dest
+        baseDir: dest,
+        port: 8000
     },
     clean: {
         dest: dest

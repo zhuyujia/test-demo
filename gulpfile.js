@@ -14,7 +14,7 @@ var gulp = require('gulp'),
 
 // 清除 dist 文件夹
 gulp.task('clean', function() {
-    return del([config.clean.dest]);
+    return del.sync([config.clean.dest]);
 });
 
 // 配置服务器
@@ -23,12 +23,12 @@ gulp.task('serve', function() {
         server: {
             baseDir: config.browserSync.baseDir
         },
-        port: 8000
+        port: config.browserSync.port
     });
-
-    gulp.watch(config.html.all, ['html']);
-    gulp.watch(config.sass.all, ['sass']);
-    gulp.watch(config.js.src, ['js']);
+    // 监听 html，sass，js
+    gulp.watch(config.html.all, ['html']).on('change', browserSync.reload);
+    gulp.watch(config.sass.all, ['sass']).on('change', browserSync.reload);
+    gulp.watch(config.js.src, ['js']).on('change', browserSync.reload);
 });
 
 // html 整合
@@ -38,10 +38,7 @@ gulp.task('html', function() {
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(gulp.dest(config.html.dest))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(gulp.dest(config.html.dest));
 });
 
 // sass 编译
@@ -52,21 +49,13 @@ gulp.task('sass', function() {
             outputStyle: 'compressed'
         }).on('error', sass.logError))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(config.sass.dest))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(gulp.dest(config.sass.dest));
 });
 
 // js 处理
 gulp.task('js', function() {
     return gulp.src(config.js.src)
-        .pipe(gulp.dest(config.js.dest))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(gulp.dest(config.js.dest));
 });
 
-gulp.task('default', ['clean'], function() {
-    gulp.start('html', 'sass', 'js', 'serve');
-});
+gulp.task('default', ['clean', 'html', 'sass', 'js', 'serve']);

@@ -6,10 +6,6 @@ var src = './app/src',
     dest = './app/dist';
 
 module.exports = {
-    browserSync: {
-        baseDir: dest,
-        port: 8000
-    },
     clean: {
         dest: dest
     },

@@ -1,7 +1,9 @@
-// npm install --save-dev gulp del browser-sync gulp-sass gulp-sourcemaps gulp-file-include gulp-livereload gulp-mock-server gulp-webserver
+// npm install --save-dev gulp del gulp-sass gulp-sourcemaps gulp-file-include gulp-livereload gulp-mock-server
 // 后期新增插件-雪碧图 npm install --save-dev gulp-css-spriter/gulp.spritesmith
 // 后期新增插件-生成版本号 npm install --save-dev gulp-rev gulp-rev-collector
+
 'use strict';
+
 var gulp = require('gulp'),
     config = require('./config'),
     del = require('del'),
@@ -10,18 +12,19 @@ var gulp = require('gulp'),
     fileinclude = require('gulp-file-include'),
     livereload = require('gulp-livereload'),
     mockServer = require('gulp-mock-server'),
-    webserver = require('gulp-webserver');
+    browserSync = require('browser-sync'),
+    middleware = require('./middleware');
 
 // 清除 dist 文件夹
 gulp.task('clean', function () {
-    return del.sync(config.clean.dest);
+    return del.sync(config.clean.dist);
 });
 
 // html 整合
 gulp.task('html', function () {
     return gulp.src(config.html.src)
         .pipe(fileinclude())
-        .pipe(gulp.dest(config.html.dest));
+        .pipe(gulp.dest(config.html.dist));
 });
 
 // sass 编译
@@ -32,32 +35,37 @@ gulp.task('sass', function () {
             outputStyle: 'compressed'
         }).on('error', sass.logError))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(config.sass.dest));
+        .pipe(gulp.dest(config.sass.dist));
 });
 
 // js 处理
 gulp.task('js', function () {
     return gulp.src(config.js.src)
-        .pipe(gulp.dest(config.js.dest));
+        .pipe(gulp.dest(config.js.dist));
 });
 
-// 配置服务器 mockserver
+// 接口服务器
 gulp.task('mockserver', function () {
-    // 监听 html，sass，js
-    gulp.watch(config.html.all, ['html']);
-    gulp.watch(config.sass.all, ['sass']);
-    gulp.watch(config.js.src, ['js']);
-    return gulp.src('./app')
+    return gulp.src('.')
         .pipe(mockServer({
             port: 8000,
-            livereload: true,
-            open: true,
-            mockDir: './app/data',
-            directoryListing: {
-                enable: true,
-                path: './app'
-            }
+            mockDir: './app/data'
         }));
 });
 
-gulp.task('default', ['clean', 'html', 'sass', 'js', 'mockserver']);
+// 静态服务器
+gulp.task('browsersync', function() {
+    // 监听 html，sass，js
+    gulp.watch(config.html.all, ['html']).on('change', browserSync.reload);
+    gulp.watch(config.sass.all, ['sass']).on('change', browserSync.reload);
+    gulp.watch(config.js.src, ['js']).on('change', browserSync.reload);
+
+    browserSync.init({
+        server: {
+            baseDir: './app/dist',
+            middleware: middleware
+        }
+    });
+});
+
+gulp.task('default', ['clean', 'html', 'sass', 'js', 'mockserver', 'browsersync']);

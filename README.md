@@ -14,4 +14,4 @@ gulp
 
 ## 浏览器输入
 
-http://localhost:8000/index.html
+http://localhost:3000

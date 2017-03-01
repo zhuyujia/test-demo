@@ -1,9 +1,7 @@
-@@if (headerType == 'home') {
-    <h1 class="green">@@headerType</h1>
+@@if (type == 'header') {
+    <h1 class="green">@@type</h1>
 }
-@@if (headerType == 'article') {
-    <h1 class="red">@@headerType</h1>
+@@if (type != 'header') {
+    <h1 class="red">@@type</h1>
 }
-
-<h2>@@headerType</h2>
 

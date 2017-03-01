@@ -1,30 +1,30 @@
 'use strict';
 
-var src = './app/src',
+var dist = './app/dist',
+    src = './app/src',
     srcTemplate = src + '/template',
-    srcStatic = src + '/static',
-    dest = './app/dist';
+    srcStatic = src + '/static';
 
 module.exports = {
     clean: {
-        dest: dest
+        dist: dist
     },
     html: {
         all: srcTemplate + '/**/*.html',
         src: srcTemplate + '/*.html',
-        dest: dest
+        dist: dist
     },
     sass: {
-        all: srcStatic + '/sass/*.sass',
+        all: srcStatic + '/sass/**/*.scss',
         src: srcStatic + '/sass/style.scss',
-        dest: dest + '/css'
+        dist: dist + '/css'
     },
     images: {
         src: srcStatic + '/images/**/*',
-        dest: dest + '/images'
+        dist: dist + '/images'
     },
     js: {
-        src: srcStatic + '/js/*.js',
-        dest: dest + '/js'
+        src: srcStatic + '/js/**/*.js',
+        dist: dist + '/js'
     }
 };

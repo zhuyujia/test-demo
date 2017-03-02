@@ -26,5 +26,7 @@ module.exports = {
     js: {
         src: srcStatic + '/js/**/*.js',
         dist: dist + '/js'
-    }
+    },
+    serverRoot: dist,
+    mockDir: src + '/data'
 };

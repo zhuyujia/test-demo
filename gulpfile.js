@@ -15,12 +15,12 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     middleware = require('./middleware');
 
-// 清除 dist 文件夹
+// 清除 dist
 gulp.task('clean', function () {
     return del.sync(config.clean.dist);
 });
 
-// html 整合
+// html 合并
 gulp.task('html', function () {
     return gulp.src(config.html.src)
         .pipe(fileinclude())
@@ -49,7 +49,7 @@ gulp.task('mockserver', function () {
     return gulp.src('.')
         .pipe(mockServer({
             port: 8000,
-            mockDir: './app/data'
+            mockDir: config.mockDir
         }));
 });
 
@@ -62,7 +62,7 @@ gulp.task('browsersync', function() {
 
     browserSync.init({
         server: {
-            baseDir: './app/dist',
+            baseDir: config.serverRoot,
             middleware: middleware
         }
     });

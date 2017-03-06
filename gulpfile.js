@@ -12,7 +12,8 @@ var gulp = require('gulp'),
     fileinclude = require('gulp-file-include'),
     livereload = require('gulp-livereload'),
     mockServer = require('gulp-mock-server'),
-    browserSync = require('browser-sync'),
+    browserSync = require('browser-sync').create(),
+    reload = browserSync.reload,
     middleware = require('./middleware');
 
 // 清除 dist
@@ -24,7 +25,10 @@ gulp.task('clean', function () {
 gulp.task('html', function () {
     return gulp.src(config.html.src)
         .pipe(fileinclude())
-        .pipe(gulp.dest(config.html.dist));
+        .pipe(gulp.dest(config.html.dist))
+        .pipe(reload({
+            stream: true
+        }));
 });
 
 // sass 编译
@@ -35,30 +39,36 @@ gulp.task('sass', function () {
             outputStyle: 'compressed'
         }).on('error', sass.logError))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(config.sass.dist));
+        .pipe(gulp.dest(config.sass.dist))
+        .pipe(reload({
+            stream: true
+        }));
 });
 
 // js 处理
 gulp.task('js', function () {
     return gulp.src(config.js.src)
-        .pipe(gulp.dest(config.js.dist));
+        .pipe(gulp.dest(config.js.dist))
+        .pipe(reload({
+            stream: true
+        }));
 });
 
 // 接口服务器
 gulp.task('mockserver', function () {
     return gulp.src('.')
         .pipe(mockServer({
-            port: 8000,
-            mockDir: config.mockDir
+            port: config.mock.port,
+            mockDir: config.mock.dir
         }));
 });
 
 // 静态服务器
 gulp.task('browsersync', function() {
     // 监听 html，sass，js
-    gulp.watch(config.html.all, ['html']).on('change', browserSync.reload);
-    gulp.watch(config.sass.all, ['sass']).on('change', browserSync.reload);
-    gulp.watch(config.js.src, ['js']).on('change', browserSync.reload);
+    gulp.watch(config.html.all, ['html']);
+    gulp.watch(config.sass.all, ['sass']);
+    gulp.watch(config.js.src, ['js']);
 
     browserSync.init({
         server: {

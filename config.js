@@ -27,6 +27,9 @@ module.exports = {
         src: srcStatic + '/js/**/*.js',
         dist: dist + '/js'
     },
-    serverRoot: dist,
-    mockDir: src + '/data'
+    mock: {
+        dir: src + '/data',
+        port: 8000
+    },
+    serverRoot: dist
 };

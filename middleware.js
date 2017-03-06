@@ -1,10 +1,12 @@
 'use strict';
 
-var proxyMiddleware = require('http-proxy-middleware');
+var proxyMiddleware = require('http-proxy-middleware'),
+    config = require('./config');
 var filter = function (pathname, req) {
     return (pathname.match('^/') && req.method === 'POST');
 };
 
 module.exports = (function () {
-    return [proxyMiddleware(filter, {target: 'http://localhost:8000', changeOrigin: true})];
+    var _target = 'http://localhost:' + config.mock.port;
+    return [proxyMiddleware(filter, {target: _target, changeOrigin: true})];
 }());

@@ -5,8 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "npm install",
-    "start": "gulp"
+    "start": "gulp default"
   },
   "author": "zhuyujia",
   "license": "MIT",

@@ -10,7 +10,7 @@ module.exports = {
         dist: dist
     },
     html: {
-        all: srcTemplate + '/**/*.html',
+        all: srcTemplate + '/**/*',
         src: srcTemplate + '/*.html',
         dist: dist
     },

@@ -1,19 +1,22 @@
-// npm install --save-dev gulp del gulp-sass gulp-sourcemaps gulp-file-include gulp-livereload gulp-mock-server
 // 后期新增插件-雪碧图 npm install --save-dev gulp-css-spriter/gulp.spritesmith
 // 后期新增插件-生成版本号 npm install --save-dev gulp-rev gulp-rev-collector
 
 'use strict';
 
 var gulp = require('gulp'),
-    config = require('./config'),
     del = require('del'),
+    plumber = require('gulp-plumber'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    fileinclude = require('gulp-file-include'),
     mockServer = require('gulp-mock-server'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
-    middleware = require('./middleware');
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
+    ejs = require('gulp-ejs'),
+    middleware = require('./middleware'),
+    config = require('./config');
 
 // 清除 dist
 gulp.task('clean', function () {
@@ -23,7 +26,8 @@ gulp.task('clean', function () {
 // html 合并
 gulp.task('html', function () {
     return gulp.src(config.html.src)
-        .pipe(fileinclude())
+        .pipe(plumber())
+        .pipe(ejs())
         .pipe(gulp.dest(config.html.dist))
         .pipe(reload({
             stream: true
@@ -33,6 +37,7 @@ gulp.task('html', function () {
 // sass 编译
 gulp.task('sass', function () {
     return gulp.src(config.sass.src)
+        .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass({
             outputStyle: 'compressed'
@@ -46,7 +51,12 @@ gulp.task('sass', function () {
 
 // js 处理
 gulp.task('js', function () {
-    return gulp.src(config.js.src)
+    // browserify 只能预编译单个 js，可以使用 node-glob 进行多个 js 进行预编译，具体地址：http://www.tuicool.com/articles/MFjAZn6
+    return browserify('./app/src/static/js/index.js')
+        .bundle()
+        .pipe(source('index.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(gulp.dest(config.js.dist))
         .pipe(reload({
             stream: true

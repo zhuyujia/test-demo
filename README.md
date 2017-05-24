@@ -1,13 +1,26 @@
 # test-demo
 
+## 安装 gulp
+
+```
+npm install gulp -g
+```
+
 ## 安装依赖包
 
 ```
+cd test-demo
 npm install
 ```
 
-## 打包并启动静态服务器
+## 开发环境
 
 ```
-gulp
+npm run dev
+```
+
+## 线上环境
+
+```
+npm run build
 ```

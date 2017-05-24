@@ -1,35 +1,35 @@
 'use strict';
 
-var dist = './app/dist',
+var build = './app/build',
     src = './app/src',
-    srcTemplate = src + '/template',
-    srcStatic = src + '/static';
+    pagesSrc = src + '/pages',
+    pagesBuild = build + '/pages',
+    staticsBuild = build + '/statics',
+    maps = '../maps';
 
 module.exports = {
     clean: {
-        dist: dist
+        build: build
     },
     html: {
-        all: srcTemplate + '/**/*',
-        src: srcTemplate + '/*.html',
-        dist: dist
+        all: pagesSrc + '/**/*.html',
+        src: pagesSrc + '/**/!(_)*.html',
+        build: pagesBuild
     },
     sass: {
-        all: srcStatic + '/sass/**/*.scss',
-        src: srcStatic + '/sass/style.scss',
-        dist: dist + '/css'
-    },
-    images: {
-        src: srcStatic + '/images/**/*',
-        dist: dist + '/images'
+        src: pagesSrc + '/**/*.scss',
+        loadPaths: [src + '/framework/sass/'],
+        build: staticsBuild + '/css'
     },
     js: {
-        src: srcStatic + '/js/**/*.js',
-        dist: dist + '/js'
+        all: pagesSrc + '/**/*.{js,ejs}',
+        src: pagesSrc + '/**/*.js',
+        maps: maps,
+        build: staticsBuild + '/js'
     },
     mock: {
-        dir: src + '/data',
+        dir: src + '/mock',
         port: 8000
     },
-    serverRoot: dist
+    serverRoot: build
 };

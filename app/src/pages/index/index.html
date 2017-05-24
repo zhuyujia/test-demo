@@ -6,25 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/statics/css/index.css">
 </head>
 <body>
-<% include inc/header %>
-<div id="content"></div>
+<% include ../common/header/_header.html %>
 <div id="list"></div>
 </body>
 </html>
 <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script>
-    $(function () {
-        $.ajax({
-            type: 'post',
-            url: '/test',
-            dataType: 'json'
-        }).done(function (res) {
-            var $content = $('#content');
-            $content.html(res.content);
-        });
-    });
-</script>
-<script src="js/index.js"></script>
+<script src="/statics/js/index.js"></script>

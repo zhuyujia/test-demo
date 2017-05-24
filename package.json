@@ -5,7 +5,9 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp default"
+    "start": "gulp default",
+    "dev": "gulp dev",
+    "build": "gulp build"
   },
   "author": "zhuyujia",
   "license": "MIT",
@@ -20,6 +22,7 @@
     "gulp-livereload": "^3.8.1",
     "gulp-mock-server": "^1.1.3",
     "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.1",
     "http-proxy-middleware": "^0.17.3",

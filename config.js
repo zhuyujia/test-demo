@@ -1,7 +1,7 @@
 'use strict';
 
-var build = './app/build',
-    src = './app/src',
+var build = './build',
+    src = './src',
     pagesSrc = src + '/pages',
     pagesBuild = build + '/pages',
     staticsBuild = build + '/statics',

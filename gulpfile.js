@@ -78,7 +78,7 @@ gulp.task('sass:build', function () {
 gulp.task('js:dev', function () {
     // browserify 只能预编译单个 js，可以使用 node-glob 进行多个 js 进行预编译，具体地址：http://www.tuicool.com/articles/MFjAZn6
     // 建议使用 through2
-    return browserify('./app/src/pages/index/index.js')
+    return browserify('./src/pages/index/index.js')
         .bundle()
         .pipe(source('index.js'))
         .pipe(buffer())

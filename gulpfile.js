@@ -13,8 +13,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
     browserify = require('browserify'),
-    source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer'),
+    through2 = require('through2'),
     ejs = require('gulp-ejs'),
     middleware = require('./middleware'),
     config = require('./config');
@@ -33,13 +32,6 @@ gulp.task('html:dev', function () {
         .pipe(reload({
             stream: true
         }));
-});
-
-// html 打包
-gulp.task('html:build', function () {
-    return gulp.src(config.html.src)
-        .pipe(ejs())
-        .pipe(gulp.dest(config.html.build));
 });
 
 // sass 编译
@@ -61,27 +53,20 @@ gulp.task('sass:dev', function () {
         }));
 });
 
-// sass 打包
-gulp.task('sass:build', function () {
-    return gulp.src(config.sass.src)
-        .pipe(sass({
-            outputStyle: 'compressed',
-            includePaths: config.sass.loadPaths
+// js 处理
+gulp.task('js:dev', function () {
+    return gulp.src(config.js.src)
+        .pipe(plumber())
+        .pipe(through2.obj(function (file, enc, next) {
+            browserify(file.path).bundle(function (err, res) {
+                err && console.log(err.stack);
+                file.contents = res;
+                next(null, file);
+            });
         }))
         .pipe(rename(function (path) {
             path.dirname = '';
         }))
-        .pipe(gulp.dest(config.sass.build));
-});
-
-// js 处理
-gulp.task('js:dev', function () {
-    // browserify 只能预编译单个 js，可以使用 node-glob 进行多个 js 进行预编译，具体地址：http://www.tuicool.com/articles/MFjAZn6
-    // 建议使用 through2
-    return browserify('./src/pages/index/index.js')
-        .bundle()
-        .pipe(source('index.js'))
-        .pipe(buffer())
         .pipe(gulp.dest(config.js.build))
         .pipe(reload({
             stream: true
@@ -103,15 +88,48 @@ gulp.task('browsersync', function () {
     gulp.watch(config.html.all, ['html:dev']);
     gulp.watch(config.sass.src, ['sass:dev']);
     gulp.watch(config.js.all, ['js:dev']);
-
     browserSync.init({
+        open: config.server.open,
         server: {
-            baseDir: config.serverRoot,
+            baseDir: config.server.root,
             middleware: middleware
         }
     });
 });
 
+// html 打包
+gulp.task('html:build', function () {
+    return gulp.src(config.html.src)
+        .pipe(ejs())
+        .pipe(gulp.dest(config.html.build));
+});
+
+// sass 打包
+gulp.task('sass:build', function () {
+    return gulp.src(config.sass.src)
+        .pipe(sass({
+            outputStyle: 'compressed',
+            includePaths: config.sass.loadPaths
+        }))
+        .pipe(rename(function (path) {
+            path.dirname = '';
+        }))
+        .pipe(gulp.dest(config.sass.build));
+});
+
+// js 打包
+gulp.task('js:build', function () {
+    return gulp.src(config.js.src)
+        .pipe(through2.obj(function (file, enc, next) {
+            browserify(file.path).bundle(function (err, res) {
+                err && console.log(err.stack);
+                file.contents = res;
+                next(null, file);
+            });
+        }))
+        .pipe(gulp.dest(config.js.build));
+});
+
 gulp.task('dev', ['clean', 'html:dev', 'sass:dev', 'js:dev', 'mockserver', 'browsersync']);
 
-gulp.task('build', ['clean', 'html:build', 'sass:build']);
+gulp.task('build', ['clean', 'html:build', 'sass:build', 'js:build']);

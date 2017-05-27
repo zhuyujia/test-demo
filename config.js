@@ -31,5 +31,8 @@ module.exports = {
         dir: src + '/mock',
         port: 8000
     },
-    serverRoot: build
+    server: {
+        root: build,
+        open: 'local'   // false, 'local', 'external', 'ui', 'tunnel'
+    }
 };

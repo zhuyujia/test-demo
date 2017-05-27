@@ -1,3 +1,4 @@
+// 后续加入 js 压缩（gulp-uglify），js 的 sourcemap
 // 后期新增插件-雪碧图 npm install --save-dev gulp-css-spriter/gulp.spritesmith
 // 后期新增插件-生成版本号 npm install --save-dev gulp-rev gulp-rev-collector
 
@@ -8,13 +9,14 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
+    uglify = require('gulp-uglify'),
     mockServer = require('gulp-mock-server'),
-    browserSync = require('browser-sync').create(),
-    reload = browserSync.reload,
     browserify = require('browserify'),
     through2 = require('through2'),
     ejs = require('gulp-ejs'),
+    browserSync = require('browser-sync').create(),
+    reload = browserSync.reload,
+    sourcemaps = require('gulp-sourcemaps'),
     middleware = require('./middleware'),
     config = require('./config');
 
@@ -57,6 +59,7 @@ gulp.task('sass:dev', function () {
 gulp.task('js:dev', function () {
     return gulp.src(config.js.src)
         .pipe(plumber())
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(through2.obj(function (file, enc, next) {
             browserify(file.path).bundle(function (err, res) {
                 err && console.log(err.stack);
@@ -64,6 +67,8 @@ gulp.task('js:dev', function () {
                 next(null, file);
             });
         }))
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
         .pipe(rename(function (path) {
             path.dirname = '';
         }))
@@ -126,6 +131,10 @@ gulp.task('js:build', function () {
                 file.contents = res;
                 next(null, file);
             });
+        }))
+        .pipe(uglify())
+        .pipe(rename(function (path) {
+            path.dirname = '';
         }))
         .pipe(gulp.dest(config.js.build));
 });

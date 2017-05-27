@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-## 线上环境
+## 打包
 
 ```
 npm run build

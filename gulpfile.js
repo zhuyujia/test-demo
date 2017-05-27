@@ -1,4 +1,3 @@
-// 后续加入 js 压缩（gulp-uglify），js 的 sourcemap
 // 后期新增插件-雪碧图 npm install --save-dev gulp-css-spriter/gulp.spritesmith
 // 后期新增插件-生成版本号 npm install --save-dev gulp-rev gulp-rev-collector
 

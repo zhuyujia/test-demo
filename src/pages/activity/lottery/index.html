@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>宝箱抽奖</title>
+    <script type="text/javascript">
+        ;(function () {
+            var getSize;
+            (getSize = function () {
+                var width = document.documentElement.clientWidth;
+                if (width < 320) width = 320;
+                if (width < 750) {
+                    document.documentElement.style.fontSize = (width * 100) / 750 + 'px'
+                } else {
+                    document.documentElement.style.fontSize = '100px';
+                }
+            })();
+            window.addEventListener('resize', function () {
+                getSize();
+            })
+        })();
+    </script>
+    <link type="text/css" rel="stylesheet" href="/static/css/lottery.css">
+</head>
+<body>
+<div class="chest">
+    <div class="anyway-middle">
+        <div class="chest-main">
+            <div class="border">
+                <ul class="jiugong J_jiugong">
+                    <li class="item item1 selected">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称1</p>
+                    </li>
+                    <li class="item item2">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称2</p>
+                        <p class="item-num">x123</p>
+                    </li>
+                    <li class="item item3">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称3</p>
+                        <p class="item-num">x1000</p>
+                    </li>
+                    <li class="item item4">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称4</p>
+                    </li>
+                    <li class="item item5">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称5</p>
+                    </li>
+                    <li class="item item6">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称6</p>
+                    </li>
+                    <li class="item item7">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称7</p>
+                    </li>
+                    <li class="item item8">
+                        <img src="//www.qiyipic.com/xiuh5/fix/0.0.1/img/spring2017/zanshi.png" alt="礼物名称">
+                        <p class="item-name">礼物名称8</p>
+                    </li>
+                </ul>
+                <div class="jiugong-start J_start">
+                    <strong>点击<br>抽奖</strong>
+                    <p>2次免费</p>
+                </div>
+            </div>
+            <p class="ps">本轮共30次付费抽奖机会</p>
+        </div>
+        <span class="close">&#10005;</span>
+    </div>
+</div>
+<script src="/static/js/lottery.js"></script>
+<script src="/static/js/summer2017_chest.js"></script>
+</body>
+</html>

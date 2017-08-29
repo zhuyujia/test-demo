@@ -1,0 +1,338 @@
+/**
+ * User:zhuyujia
+ * Date:2017-05-25 11:50
+ * Mail:zhuyujia@qiyi.com
+ */
+
+@import '../../../mods/global/global.styl'
+
+html,
+body {
+    overflow: hidden
+    position: relative
+    max-width: 750px
+    min-width: 320px
+    height: 100%
+    margin: 0 auto
+    background: rgba(0, 0, 0, .3)
+    font-family: "\5FAE\8F6F\96C5\9ED1", sans-serif
+}
+
+.close {
+    overflow: hidden
+    position: absolute
+    z-index: 3
+    top: -.9rem
+    right: 0
+    width: .7rem
+    height: .7rem
+    border: 1px solid rgba(255, 255, 255, .3)
+    border-radius: 50%
+    -webkit-box-sizing: border-box
+    box-sizing: border-box
+    color: #fff
+    font-size: .32rem
+    line-height: .7rem
+}
+
+.anyway-middle {
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 5.4rem
+    text-align: center
+    -webkit-transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)
+}
+
+.chest {
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    .anyway-middle {
+        width: auto
+    }
+}
+
+.chest-img {
+    display: block
+    width: 4.3rem
+    height: 4.3rem
+}
+
+.chest-main {
+    position: relative
+    width: 5.66rem
+    height: 5.44rem
+    padding: .2rem
+    background-color: #dc001e
+    border-radius: .32rem
+    -webkit-box-shadow: inset 0 0 .1rem rgba(255, 255, 255, .75), 0 .14rem 0 #b70019
+    box-shadow: inset 0 0 .1rem rgba(255, 255, 255, .75), 0 .14rem 0 #b70019
+    .border {
+        position: relative
+        height: 4.24rem
+        padding: .3rem
+        &:before {
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            background: url(img/summer2017/border.png) no-repeat
+            background-size: 100%
+            content: ''
+        }
+    }
+    .jiugong {
+        position: relative
+        width: 100%
+        height: 100%
+        background-color: #b70019
+        -webkit-box-sizing: border-box
+        box-sizing: border-box
+        font-size: 0
+        text-align: center
+        .item {
+            position: absolute
+            width: 1.6rem
+            height: 1.12rem
+            padding-top: .1rem
+            background-color: #ffeeef
+            border-radius: .18rem
+            -webkit-box-shadow: 0 .12rem 0 #ffc0c1
+            box-shadow: 0 .12rem 0 #ffc0c1
+            color: #333
+            font-size: .2rem
+            line-height: 100%
+            &.item1 {
+                top: .08rem
+                left: .08rem
+            }
+            &.item2 {
+                top: .08rem
+                left: 1.73rem
+            }
+            &.item3 {
+                top: .08rem
+                right: .08rem
+            }
+            &.item4 {
+                top: 1.46rem
+                right: .08rem
+            }
+            &.item5 {
+                top: 2.84rem
+                right: .08rem
+            }
+            &.item6 {
+                top: 2.84rem
+                left: 1.73rem
+            }
+            &.item7 {
+                top: 2.84rem
+                left: .08rem
+            }
+            &.item8 {
+                top: 1.46rem
+                left: .08rem
+            }
+            &.selected {
+                &:before {
+                    position: absolute
+                    z-index: 3
+                    top: 0
+                    left: 0
+                    width: 1.6rem
+                    height: 1.34rem
+                    background: url(img/summer2017/selected.png) no-repeat
+                    background-size: 100%
+                    content: ''
+                }
+            }
+            img {
+                display: block
+                width: auto
+                height: .8rem
+                margin: 0 auto .04rem
+            }
+        }
+        .item-name {
+            overflow: hidden;
+        }
+        .item-num {
+            position: absolute
+            z-index: 2
+            top: .6rem
+            left: 0
+            width: 100%
+            color: #ff4039
+            font-weight: bolder
+            font-size: .32rem
+            text-align: center
+            -webkit-transform: skewX(-15deg)
+            transform: skewX(-15deg)
+            -webkit-text-stroke: .02rem #fff
+        }
+    }
+    .jiugong-start {
+        position: absolute
+        top: 1.76rem
+        left: 2.03rem
+        width: 1.6rem
+        height: 1.12rem
+        padding-top: .1rem
+        background-color: #ffb815
+        border-radius: .18rem
+        -webkit-box-shadow: 0 .12rem 0 #f07700
+        box-shadow: 0 .12rem 0 #f07700
+        color: #fffaec
+        font-size: .2rem
+        line-height: 100%
+        &.disabled {
+            background-color: #ebe9e9
+            -webkit-box-shadow: 0 .12rem 0 #a6a6a6
+            box-shadow: 0 .12rem 0 #a6a6a6
+            color: #999
+        }
+        strong {
+            overflow: hidden
+            display: block
+            height: .8rem
+            margin-bottom: .04rem
+            font-size: .36rem
+            line-height: .4rem
+        }
+    }
+    .ps {
+        width: 4rem
+        height: .4rem
+        margin: .2rem auto 0
+        background-color: #b70019
+        -webkit-border-radius: .2rem
+        border-radius: .2rem
+        -webkit-box-shadow: 0 1px 1px #e8576b, inset 0 0 1px #ac0015
+        box-shadow: 0 1px 1px #e8576b, inset 0 0 1px #ac0015
+        color: #faa;
+        font-size: .24rem
+        text-align: center
+        line-height: .4rem
+    }
+}
+
+.chest-dialog {
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    font-size: .32rem
+    .anyway-middle {
+        padding: .5rem 0
+        background-color: #fff
+        border-radius: .1rem
+    }
+    .close {
+        top: .2rem
+        right: .2rem
+        width: auto
+        height: auto
+        background: none
+        color: #666
+        font-size: .32rem
+        line-height: 100%
+    }
+    .btn {
+        display: block
+        width: 4.6rem
+        height: .8rem
+        margin: 0 auto
+        background: -webkit-linear-gradient(left, #ff9221, #ff4039)
+        background: linear-gradient(left, #ff9221, #ff4039)
+        border-radius: .4rem
+        color: #fff
+        line-height: .8rem
+    }
+    .empty {
+        margin-bottom: .4rem
+        padding-top: 1.43rem
+        background: url(img/summer2017/chest_empty.png) no-repeat center .18rem
+        background-size: .94rem .94rem
+    }
+    .t {
+        margin-bottom: .3rem
+        font-weight: normal
+        font-size: .32rem
+    }
+    .gift {
+        margin-bottom: .3rem
+        strong {
+            margin-left: .1rem
+            color: #f63
+            font-style: italic
+        }
+    }
+    .chest-gift {
+        width: auto
+        height: .8rem
+        vertical-align: middle
+    }
+    .ps {
+        margin-bottom: .4rem
+        color: #999
+        font-size: .24rem
+    }
+}
+
+.dialog {
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background: rgba(0, 0, 0, .3)
+    .anyway-middle {
+        background-color: #fff
+    }
+    .dialog-bd {
+        background-color: rgba(255, 255, 255, .9)
+        border-radius: .1rem .1rem 0 0
+        color: #333
+        font-size: .32rem
+    }
+    .dialog-act {
+        display: -webkit-flex
+        display: -webkit-box
+        display: flex
+        border-radius: 0 0 .1rem .1rem
+        color: #9b87ed
+        font-size: 0
+        line-height: .6rem
+        button {
+            display: block
+            width: 100%
+            height: .9rem
+            background-color: rgba(255, 255, 255, .9)
+            border: none
+            border-right: 1px solid #e0e0e0
+            border-top: 1px solid #e0e0e0
+            color: #9b87ed
+            font-size: .32rem
+            -webkit-box-flex: 1
+            -webkit-flex: 1
+            flex: 1
+        }
+        button:first-child {
+            border-bottom-left-radius: .1rem
+        }
+        button:last-child {
+            border-right: none
+            border-bottom-right-radius: .1rem
+        }
+    }
+    .nutus {
+        padding .4rem 0
+    }
+}
